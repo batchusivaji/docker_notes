@@ -58,6 +58,7 @@
 ### Bringing up the Application to sell products online
 #### why we are using CI/CD pipelines
 * For example when we want to sell a product into ecommerce site there are lot of challeges will be occur
+  
   ![preview](images/container1.png)
 * Issues:
     1) lot of manual steps
