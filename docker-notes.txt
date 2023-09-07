@@ -1,0 +1,206 @@
+Docker:
+------
+Q)what is docker?
+	docker is container management.
+
+Q)what is virtualization?
+	virtualization means run multiple os on single physical system.
+
+- in virtualization every vm is independent.
+- to setup a vm hypervisor is requird.
+- every vm has different credentials.
+- for running an application you need a vm.
+- if we setup multiple vm's for an application. we need multiple isolation vm's. space is wasted. and high cost. 
+
+Q)what container management?
+	container management is a thin virtualization. here containers means vm. container has only one application, it will take the required files from host OS. container has no os. it will use the kernel of host os.
+
+- it does not have any os
+- fast performing.
+- self sustained (all necessary dependencies)
+- it has layerd architecture.
+- all advantages of virtualization.
+- easy to scale.
+
+NOTE:
+ - VM is for multiple application because all are availabe.
+ - Container is for only one application.
+
+
+	virtualization					docker
+---------------------------------------------------------------------------
+- isolation os 					- isolation container
+- space is wasted.				- space is not wasted.
+- every files is installed			- required bin & lib files only installed, remaining files shares from host os.
+- take time to boot				- take very less time to boot.
+- take time to restart vm			- take very less time to restart container.
+
+Q)how to setup these containers?
+	
+ 	normal iso ----------> vm
+	vagrant box ----------> vm
+	aws     AMI -----------> instance
+	Docker images ----------> container
+
+doker install & configure:
+-------------------------
+- setup the required packages
+- setup the docker repository
+- install the docker-ce (community edition)
+
+to download docker images:
+-------------------------
+	- docker pull (image name)
+
+work with containers:
+---------------------
+
+To run container
+	- sudo docker run --ti --rm ubuntu /bin/bash
+ 	docker run -ti --rm (image name) /bin/bash
+- docker start (container id)
+- docker stop (container id)
+- docker pause (container id)
+- docker unpause (container id)
+- docker ps
+- docker ps -a
+- docker rm (container id)
+- docker rm $(docker ps -a -q)
+
+Write a Docker image:
+--------------------
+	Gitbucket image:
+	----------------
+	- mkdir technicaladda
+	- cd technicaladda
+	- vi Dockerfile
+	From java:latest
+	MAINTAINER ramki info@google.com
+	LABEL env=prodution {label}
+	ENV apparea /data/app {environment variables}
+	Run mkdir -p $apparea  {while start the image this directory is created}
+	ADD ./gitbucket.war $apparea {add the file to this directory}
+	WORKDIR $apparea
+	CMD ["java","-jar","gitbucket.war"]  {run the gitbucket at the container start}
+	
+	
+after create the docker file build that file as image
+	- sudo docker build -t techmine/gitbucket:latest .
+
+To run that gitbucket image 
+	- sudo docker run -d -p 80:8080 techmine/gitbucket
+To login to the running container
+	- sudo docker exec -ti (container id) /bin/bash
+
+	Jenkins Image:
+	--------------
+	From java:latest
+	MAINTAINER ramki info@techmine.com
+	LABEL env=production
+	ENV apparea /data/app
+	Run mkdir -p $apparea
+	ADD ./jenkins.war $apparea
+	WORKDIR $apparea
+	CMD ["java","-jar","jenkins.war"]
+
+after create the docker file build that file as image
+	- sudo docker build -t techmine/jenkins:latest .
+
+To run that gitbucket image 
+	- sudo docker run -d -p 8080:8080 techmine/gitbucket
+To login to the running container
+	- sudo docker exec -ti (container id) /bin/bash
+
+
+Volume mapping in docker:
+-------------------------
+
+	localsystem -------------> container data
+
+	- sudo docker run -d -v /home/ramki/gitbucket_data:/root/.gitbucket -p 80:8080 techmine/gitbucket
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
