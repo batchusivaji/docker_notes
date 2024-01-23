@@ -163,6 +163,10 @@ Docker secret create creates a secret named `"secret-name"` file: `secret-name`.
 `docker commit "container-id" "image-name"`: Creates a new image from changes in the container.
 
 ### Image
+
+`docker tag <image name> batchusivaji/<name>`: creates image tag
+
+`docker push <tag name>`: image push into the dockerhub
 `docker image build -t "image-name"`: Performs image build operation after dockerfile script.
 
 `docker image build -t "image-name" -f "dockerfile-name"`: Builds an image from a different Dockerfile.

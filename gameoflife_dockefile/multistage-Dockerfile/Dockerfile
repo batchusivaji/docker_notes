@@ -12,7 +12,7 @@ LABEL author="shivaji" organization="learningThoughts" project="gameoflife"
 #ARG uid=1001
 #ARG group=qt
 #ARG gid=1001
-ARG HOMERDIR= "GOL"
+ARG HOMERDIR="GOL"
 ARG USERNAME="GOL"
 #RUN addgroup -g ${gid} ${group} && \
 #useradd -d "${HOMEDIR}" -u ${uid} -g ${gid} -m -s /bin/bash ${user}

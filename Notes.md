@@ -18,6 +18,8 @@
     - [Images](#images)
     - [Containers](#containers)
     - [Registries and Repositories](#registries-and-repositories)
+    - [Difference between Container and Containerization](#difference-between-container-and-containerization)
+    - [Difference Conatiner and Virtual machine](#difference-conatiner-and-virtual-machine)
   - [Commands](#commands)
   - [Docker Ports \& Logging](#docker-ports--logging)
   - [Docker Images](#docker-images)
@@ -52,6 +54,15 @@
     - [Docker Swarm](#docker-swarm)
     - [Service Discovery](#service-discovery)
     - [Deploy Docker App In a Swarm Cluster](#deploy-docker-app-in-a-swarm-cluster)
+    - [𝐇𝐞𝐫𝐞 𝐚𝐫𝐞 𝐬𝐨𝐦𝐞 𝐜𝐨𝐦𝐦𝐨𝐧 𝐞𝐫𝐫𝐨𝐫𝐬 𝐚𝐧𝐝 𝐢𝐬𝐬𝐮𝐞𝐬 𝐰𝐞 𝐨𝐟𝐭𝐞𝐧 𝐞𝐧𝐜𝐨𝐮𝐧𝐭𝐞𝐫 𝐰𝐡𝐞𝐧 𝐰𝐨𝐫𝐤𝐢𝐧𝐠 𝐰𝐢𝐭𝐡 𝐃𝐨𝐜𝐤𝐞𝐫:](#𝐇𝐞𝐫𝐞-𝐚𝐫𝐞-𝐬𝐨𝐦𝐞-𝐜𝐨𝐦𝐦𝐨𝐧-𝐞𝐫𝐫𝐨𝐫𝐬-𝐚𝐧𝐝-𝐢𝐬𝐬𝐮𝐞𝐬-𝐰𝐞-𝐨𝐟𝐭𝐞𝐧-𝐞𝐧𝐜𝐨𝐮𝐧𝐭𝐞𝐫-𝐰𝐡𝐞𝐧-𝐰𝐨𝐫𝐤𝐢𝐧𝐠-𝐰𝐢𝐭𝐡-𝐃𝐨𝐜𝐤𝐞𝐫)
+    - [Docker important Commands](#docker-important-commands)
+
+
+Create a nginx container with 128 MB of RAM
+Create a jenkins continer with “0.5” cpu and 256 MB of RAM
+docker container run  -P -d  --memory 128m nginx
+docker container run --name r-memcpu-jenkins -P -d --cpus="0.5" --memory 256m jenkins/jenkins
+docker stats
 
 
 
@@ -146,6 +157,13 @@ Docker engine - run on remote docker daemon or local.
 - Official names are reviewed by DockerHub.
 - If you don't specify a tag, it defaults to latest.
 - Docker will use the local image first if it's available, otherwise it will download it from the network.
+- 
+### Difference between Container and Containerization
+- Container is a Software code package containing Application's Code.it's libraries and other dependencies
+-  Contanerization makes your application Portable so that the same code can run on any device 
+  
+### Difference Conatiner and Virtual machine
+
 
 ## Commands
 
@@ -617,3 +635,84 @@ To create slave nodes use:
 ```
 docker-machine create -d digitalocean --swarm --swarm-discovery="consul://${KP_IP}:8500" --engine-opt="cluster-store=consul://${KP_IP}:8500" --engine-opt="cluster-advertise=eth1:2376" slave
 ```
+
+### 𝐇𝐞𝐫𝐞 𝐚𝐫𝐞 𝐬𝐨𝐦𝐞 𝐜𝐨𝐦𝐦𝐨𝐧 𝐞𝐫𝐫𝐨𝐫𝐬 𝐚𝐧𝐝 𝐢𝐬𝐬𝐮𝐞𝐬 𝐰𝐞 𝐨𝐟𝐭𝐞𝐧 𝐞𝐧𝐜𝐨𝐮𝐧𝐭𝐞𝐫 𝐰𝐡𝐞𝐧 𝐰𝐨𝐫𝐤𝐢𝐧𝐠 𝐰𝐢𝐭𝐡 𝐃𝐨𝐜𝐤𝐞𝐫:
+
+1.𝐈𝐦𝐚𝐠𝐞 𝐍𝐨𝐭 𝐅𝐨𝐮𝐧𝐝: You might encounter this error when trying to run a container with an image that doesn't exist locally or on the specified Docker registry. Ensure that you've pulled the image or that the image name and tag are correct.
+
+2.𝐏𝐞𝐫𝐦𝐢𝐬𝐬𝐢𝐨𝐧 𝐃𝐞𝐧𝐢𝐞𝐝: Docker containers often run as non-root users for security reasons. If your application requires access to certain resources or directories, make sure you've set the appropriate file permissions and user/group settings within the container.
+
+3.𝐏𝐨𝐫𝐭 𝐂𝐨𝐧𝐟𝐥𝐢𝐜𝐭𝐬: Trying to run multiple containers that use the same host port can lead to port conflicts. Ensure that the ports you specify in the docker run command do not conflict with existing ports in use on your host system.
+
+4.𝐎𝐮𝐭 𝐨𝐟 𝐃𝐢𝐬𝐤 𝐒𝐩𝐚𝐜𝐞: Docker uses disk space for images, containers, and logs. Over time, this can consume a significant amount of disk space. Periodically clean up unused images and containers using the docker system prune command.
+
+5.𝐂𝐨𝐧𝐭𝐚𝐢𝐧𝐞𝐫 𝐂𝐫𝐚𝐬𝐡: Containers may crash for various reasons, such as misconfiguration or application issues. Use docker logs <container_name> to check the container logs for error messages that can help diagnose the problem.
+
+6.𝐃𝐨𝐜𝐤𝐞𝐫 𝐁𝐮𝐢𝐥𝐝 𝐅𝐚𝐢𝐥𝐮𝐫𝐞𝐬: Issues may arise during the build process of a Docker image. Common problems include incorrect Dockerfile syntax, missing files or dependencies, and network problems while downloading packages during the build.
+
+7.𝐍𝐞𝐭𝐰𝐨𝐫𝐤𝐢𝐧𝐠 𝐏𝐫𝐨𝐛𝐥𝐞𝐦𝐬: Docker containers can have connectivity problems if not properly configured. Ensure that the container is attached to the correct network, that firewalls are not blocking required ports, and that DNS settings are correct.
+
+8.𝐕𝐨𝐥𝐮𝐦𝐞 𝐌𝐨𝐮𝐧𝐭 𝐄𝐫𝐫𝐨𝐫𝐬: Failing to properly mount volumes can result in data loss or incorrect behavior. Double-check the paths and permissions when using the -v flag in docker run or docker-compose.
+
+9.𝐑𝐞𝐬𝐨𝐮𝐫𝐜𝐞 𝐂𝐨𝐧𝐬𝐭𝐫𝐚𝐢𝐧𝐭𝐬: Docker containers can consume significant CPU and memory resources. Make sure you allocate appropriate resources using the --cpu and --memory flags when running containers.
+
+10.𝐈𝐦𝐚𝐠𝐞 𝐕𝐮𝐥𝐧𝐞𝐫𝐚𝐛𝐢𝐥𝐢𝐭𝐢𝐞𝐬: Using outdated or insecure base images can introduce security vulnerabilities. Regularly update your Docker images and use tools like Clair or Trivy to scan for vulnerabilities.
+
+11.𝐑𝐞𝐬𝐨𝐮𝐫𝐜𝐞 𝐋𝐞𝐚𝐤𝐬: Containers should clean up after themselves when they exit. Be cautious about resource leaks, such as leaving behind orphaned processes or unreleased file handles.
+
+
+### Docker important Commands
+
+ Docker 50 commands
+ _________________
+- docker run - run a container from an image
+- docker pull - pull an image from a registry
+- docker push - push an image to a registry
+- docker build - build an image from a Dockerfile
+- docker ps - list running containers
+- docker stop - stop a running container
+- docker start - start a stopped container
+- docker restart - restart a container
+- docker logs - show the logs of a container
+- docker exec - execute a command inside a running container
+- docker images - list available images
+- docker rm - remove a container
+- docker rmi - remove an image
+- docker inspect - show information about a container
+- docker network create - create a network for containers to communicate
+- docker network connect - connect a container to a network
+- docker network disconnect - disconnect a container from a network
+- docker port - show the mapped ports of a container
+- docker cp - copy files between a container and the host
+- docker commit - create a new image from a container's changes
+- docker login - log in to a registry
+- docker logout - log out of a registry
+- docker tag - tag an image with a new name
+- docker export - export the contents of a container as a tar archive
+- docker import - create a new image from a tar archive
+- docker save - save an image as a tar archive
+- docker load - load an image from a tar archive
+- docker top - show the processes running inside a container
+- docker stats - show resource usage statistics of containers
+- docker diff - show the changes made to a container's filesystem
+- docker events - show the events generated by Docker
+- docker history - show the history of an image
+- docker pause - pause a running container
+- docker unpause - unpause a paused container
+- docker kill - send a signal to a container to stop it abruptly
+- docker wait - wait for a container to exit and return its exit code
+- docker attach - attach to a running container's console
+- docker buildx - build and push multi-platform images
+- docker compose - manage multi-container applications with Docker Compose
+- docker swarm - create and manage a cluster of Docker nodes
+- docker volume create - create a named volume for persistent data storage
+- docker volume ls - list available volumes
+- docker volume rm - remove a named volume
+- docker system prune - remove all unused objects from Docker
+- docker system df - show the usage of Docker objects
+- docker system events - show the events generated by Docker on the system
+- docker system info - show the system-wide information about Docker
+- docker system inspect - show detailed information about Docker objects
+- docker system logs - show the system logs of Docker
+- docker system version - show the version of Docker installed on the system
+

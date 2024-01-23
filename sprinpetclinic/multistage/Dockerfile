@@ -11,7 +11,7 @@ ARG GROUP=spc
 ARG UID=1002
 ARG GID=1002
 RUN addgroup -g ${GID} ${GROUP} && \
-useradd -h ${HOMER_DIR} -u ${UID} -G ${GROPU} -M -s /bin/bash ${USER}
+    useradd -h ${HOMER_DIR} -u ${UID} -G ${GROPU} -D -s /bin/bash ${USER}
 #RUN useradd -ms /bin/bash spc
 #RUN echo 'spc:newpassword' | chpasswd
 #WORKDIR /home/spc
